@@ -1,5 +1,5 @@
-import React from 'react'
-import { ThemeProvider, CssBaseline } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import Profile from './components/Profile'
 import { theme } from './theme'
 
 export function App() {
@@ -7,8 +7,7 @@ export function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div data-testid='app-root'>
-        <h1>Welcome to Your Vite + React App</h1>
-        <p>Start editing to see some magic happen!</p>
+        <Profile />
       </div>
     </ThemeProvider>
   )
