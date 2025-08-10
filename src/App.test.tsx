@@ -3,20 +3,18 @@ import { render, screen } from '@testing-library/react'
 import { App } from './App'
 
 describe('App', () => {
-  it('renders the welcome message', () => {
+  it('renders the profile component', () => {
     render(<App />)
 
-    // Check for main heading
+    // Check for profile heading
     expect(
       screen.getByRole('heading', {
-        name: /welcome to your vite \+ react app/i,
+        name: /profile/i,
       }),
     ).toBeInTheDocument()
 
-    // Check for sub text
-    expect(
-      screen.getByText(/start editing to see some magic happen!/i),
-    ).toBeInTheDocument()
+    // Check for email field
+    expect(screen.getByText(/email:/i)).toBeInTheDocument()
   })
 
   it('renders with proper structure', () => {
