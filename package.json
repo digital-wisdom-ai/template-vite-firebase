@@ -12,8 +12,8 @@
     "test": "vitest",
     "test-run": "vitest run",
     "prepare": "husky",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,html,md,yaml}\"",
-    "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,html,md,yaml}\""
+    "format:check": "prettier --check \"**/*.{Makefile,js,jsx,ts,tsx,json,html,css,md,yaml,yml}\"",
+    "format:write": "prettier --write \"**/*.{Makefile,js,jsx,ts,tsx,json,html,css,md,yaml,yml}\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -30,6 +30,8 @@
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.18.0",
     "eslint-plugin-react": "^7.37.4",
