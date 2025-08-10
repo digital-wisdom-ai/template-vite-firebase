@@ -1,4 +1,4 @@
-.PHONY: emulator build lint format checkFormat test clean
+.PHONY: emulator build lint format checkFormat test clean tokensSync tokensUpload storybook
 
 emulator: lint format testRun
 	pnpm dev
@@ -64,3 +64,12 @@ featureComplete: checkPushed
 
 checkPushed:
 	@test "$(GIT_LOCAL_COMMIT)" = "$(GIT_REMOTE_COMMIT)"
+
+tokensSync:
+	node scripts/designTokens.js sync
+
+tokensUpload:
+	node scripts/designTokens.js upload
+
+storybook:
+	pnpm storybook

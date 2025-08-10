@@ -3,7 +3,11 @@ import { defineConfig } from 'vite'
 import { aliases } from './config/aliases'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      jsxImportSource: '@emotion/react',
+    }),
+  ],
   resolve: {
     alias: aliases,
   },

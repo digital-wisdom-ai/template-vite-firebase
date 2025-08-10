@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react'
-import { Box, Typography } from '@mui/material'
+import { useDesignTokens } from '@hooks/useDesignTokens'
+import { TOKENS } from '@gen/tokenConstants'
 
 interface ExampleComponentProps {
   title: string
@@ -7,12 +9,32 @@ interface ExampleComponentProps {
 }
 
 export function ExampleComponent({ title, children }: ExampleComponentProps) {
+  const { getValue } = useDesignTokens()
+
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant='h5' component='h2'>
+    <div
+      css={{
+        padding: getValue(TOKENS.spacing.lg),
+      }}
+    >
+      <h2
+        css={{
+          fontSize: getValue(TOKENS.typography.fontSize.h4),
+          fontWeight: getValue(TOKENS.typography.fontWeight.semibold),
+          color: getValue(TOKENS.color.primary[700]),
+          margin: 0,
+          marginBottom: getValue(TOKENS.spacing.md),
+        }}
+      >
         {title}
-      </Typography>
-      <Box sx={{ mt: 2 }}>{children}</Box>
-    </Box>
+      </h2>
+      <div
+        css={{
+          marginTop: getValue(TOKENS.spacing.md),
+        }}
+      >
+        {children}
+      </div>
+    </div>
   )
 }

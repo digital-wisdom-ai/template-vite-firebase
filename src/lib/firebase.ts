@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getRemoteConfig } from 'firebase/remote-config'
 
 export const FIREBASE_CONFIG = getFirebaseClientConfig()
 
@@ -26,5 +27,8 @@ export function base64Decode(toDecode: string | undefined) {
 
 const app = initializeApp(FIREBASE_CONFIG)
 const auth = getAuth(app)
+const remoteConfig = getRemoteConfig(app)
 
-export { auth }
+remoteConfig.settings.minimumFetchIntervalMillis = 3600000
+
+export { auth, remoteConfig }

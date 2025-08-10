@@ -13,19 +13,28 @@
     "test-run": "vitest run",
     "prepare": "husky",
     "format:check": "prettier --check \"**/*.{Makefile,js,jsx,ts,tsx,json,html,css,md,yaml,yml}\"",
-    "format:write": "prettier --write \"**/*.{Makefile,js,jsx,ts,tsx,json,html,css,md,yaml,yml}\""
+    "format:write": "prettier --write \"**/*.{Makefile,js,jsx,ts,tsx,json,html,css,md,yaml,yml}\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^6.5.0",
-    "@mui/material": "^6.5.0",
     "firebase": "^11.10.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^4.1.0",
+    "@emotion/eslint-plugin": "^11.12.0",
     "@eslint/js": "^9.33.0",
+    "@storybook/addon-a11y": "^9.1.1",
+    "@storybook/addon-docs": "^9.1.1",
+    "@storybook/addon-essentials": "9.0.0-alpha.12",
+    "@storybook/addon-onboarding": "^9.1.1",
+    "@storybook/addon-vitest": "^9.1.1",
+    "@storybook/react": "^9.1.1",
+    "@storybook/react-vite": "^9.1.1",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.1.9",
@@ -33,15 +42,21 @@
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/browser": "3.2.4",
+    "@vitest/coverage-v8": "3.2.4",
     "eslint": "^9.33.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-storybook": "^9.1.1",
     "globals": "^15.15.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "playwright": "^1.54.2",
     "prettier": "^3.6.2",
+    "storybook": "^9.1.1",
     "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   }
 }

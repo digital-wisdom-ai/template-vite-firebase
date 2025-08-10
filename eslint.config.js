@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook'
+
 import js from '@eslint/js'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import * as parser from '@typescript-eslint/parser'
@@ -49,10 +52,12 @@ export default [
         },
       ],
       'react/prop-types': 'off',
+      'react/no-unknown-property': ['error', { ignore: ['css'] }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         { varsIgnorePattern: '^(React|JSX)$' },
       ],
+      '@typescript-eslint/no-explicit-any': 'off',
       'func-style': ['error', 'declaration', { allowArrowFunctions: false }],
       'no-nested-ternary': 'error',
       'max-len': ['error', { code: 120 }],
@@ -60,4 +65,5 @@ export default [
       'max-depth': ['error', 4],
     },
   },
+  ...storybook.configs['flat/recommended'],
 ]

@@ -38,16 +38,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Use `pnpm` for all package operations (not npm or yarn).
 
+### Design Tokens
+
+- `make tokensSync` - Download tokens from Firebase and generate TypeScript constants
+- `make tokensUpload` - Upload local tokens.json to Firebase Remote Config
+- `node scripts/designTokens.js generate` - Generate TypeScript constants from tokens.json
+
 ## Architecture Overview
 
-This is a Vite-based React template with Firebase authentication and Material-UI styling.
+This is a Vite-based React template with Firebase authentication and live design tokens system using Emotion CSS-in-JS.
 
 ### Key Components
 
 - **AuthContext** (`src/context/AuthContext.tsx`) - Firebase authentication provider that wraps the entire app
+- **DesignTokensContext** (`src/context/DesignTokensContext.tsx`) - Design tokens provider with Firebase Remote Config integration
 - **Firebase Config** (`src/lib/firebase.ts`) - Firebase initialization with base64-encoded config from environment
+- **Design Tokens Client** (`src/lib/designTokens.ts`) - Handles loading tokens from Firebase with local fallbacks
 - **Login Flow** - Unauthenticated users see `Login` component with Google SSO buttons
 - **Profile** (`src/components/Profile.tsx`) - Main authenticated user interface
+
+### Design Tokens System
+
+- **Source of Truth**: `src/gen/tokens.json` - contains all design values (colors, spacing, typography, etc.)
+- **Generated Constants**: `src/gen/tokenConstants.ts` - auto-generated TypeScript constants for type safety
+- **Firebase Integration**: Live updates via Firebase Remote Config with local fallbacks
+- **Component Usage**: Components use only `getValue()` and `getClasses()` methods with generated constants
 
 ### Authentication Flow
 
@@ -95,15 +110,15 @@ The project uses TypeScript path aliases configured in `config/aliases.ts`:
 
 ### Frontend Standards
 
-- Use single quotes for strings
+- Follow [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) as the default standard
 - Use only breakpoint key object syntax for responsive styles (e.g., `{ xs: ..., sm: ... }`)
 - Avoid `theme.breakpoints.up()` or similar breakpoint function calls
 - Check Makefile for commands before running anything in the project
 
 ### Code Quality Principles
 
-- Follow Clean Code and SOLID principles
-- Maintain correct reading order of functions
+- Follow Clean Code book and SOLID principles
+  - Specifically, maintain correct reading order of functions
 - Use simplest approach that works
 - Question whether each line adds value or complexity
 - Never add comments unless absolutely necessary

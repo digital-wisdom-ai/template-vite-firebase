@@ -1,0 +1,284 @@
+This file is a basic structure for adding design tokens to a React project using Firebase.
+It includes some redundant information for this project
+It may not adhere to standards yet (ex: function names)
+It may not even be fully correct.
+
+
+
+
+**Task: Implement live design tokens system**
+
+**Architecture decided:**
+- React + Emotion for styling
+- Firebase Remote Config for token storage
+- Live updates (no build-time compilation)
+- Storybook for component development
+
+**Components needed:**
+
+1. **Token provider class** - handles Firebase Remote Config connection, caches tokens in memory after first load, provides methods to get individual values and token maps
+
+2. **React hook** - wraps the token provider, manages loading state, provides `getColor`, `getSpacing`, `getClasses` methods where `getClasses` generates responsive Emotion CSS from token maps
+
+3. **Auto-generated constants** - TypeScript constants generated from Firebase schema for type safety and autocomplete, eliminates magic strings in components
+
+4. **Example components** - use tokens through the constants, demonstrate both simple styling and responsive behavior
+
+5. **Storybook integration** - stories for components that show live token behavior
+
+**Token structure in Firebase Remote Config:**
+- Nested JSON with color, spacing, typography, breakpoints
+- Responsive values as objects: `{ mobile: "16px", tablet: "24px", desktop: "32px" }`
+- Single parameter called `design_tokens`
+
+**Key constraint:** Components must use generated constants, never magic strings for token paths.
+
+See attached code for implementation reference.
+
+
+// designTokensClient.ts
+import { fetchAndActivate, getValue } from 'firebase/remote-config'
+import { remoteConfig } from '@lib/firebase'
+
+const REMOTE_CONFIG_FETCH_INTERVAL_MS = 3600000
+
+// designTokens.ts
+interface DesignTokensContextType {
+  getColor: (path: string) => string
+  getSpacing: (path: string) => string
+  getClasses: (path: string) => string
+  isLoading: boolean
+}
+
+interface TokenData {
+  color: Record<string, any>
+  spacing: Record<string, any>
+  typography: Record<string, any>
+  breakpoints: Record<string, string>
+}
+
+class DesignTokensClient {
+  private cache: TokenData | null = null
+  private loading: Promise<TokenData> | null = null
+
+  async loadTokens(): Promise<TokenData> {
+    if (this.cache) return this.cache
+    if (this.loading) return this.loading
+
+    this.loading = (async () => {
+      await fetchAndActivate(remoteConfig)
+      const tokensJson = getValue(remoteConfig, 'design_tokens').asString()
+      this.cache = JSON.parse(tokensJson)
+      return this.cache!
+    })()
+
+    return this.loading
+  }
+
+  async getTokenValue(path: string): Promise<string> {
+    const tokens = await this.loadTokens()
+    const keys = path.split('.')
+    let value: any = tokens
+
+    for (const key of keys) {
+      value = value?.[key]
+    }
+
+    return value || ''
+  }
+
+  async getTokenMap(path: string): Promise<Record<string, string>> {
+    const tokens = await this.loadTokens()
+    const keys = path.split('.')
+    let value: any = tokens
+
+    for (const key of keys) {
+      value = value?.[key]
+    }
+
+    return value || {}
+  }
+}
+
+const designTokensClient = new DesignTokensClient()
+
+// DesignTokensProvider.tsx
+import { ReactNode, createContext } from 'react'
+import { DesignTokensContext } from './designTokens'
+
+export function DesignTokensProvider({ children }: { children: ReactNode }) {
+  // Implementation follows AuthProvider pattern
+  return (
+    <DesignTokensContext.Provider value={contextValue}>
+      {children}
+    </DesignTokensContext.Provider>
+  )
+}
+
+// useDesignTokens.tsx
+import { useState, useEffect } from 'react'
+import { css } from '@emotion/react'
+
+interface UseDesignTokensReturn {
+  getColor: (path: string) => string
+  getSpacing: (path: string) => string
+  getClasses: (path: string) => string
+  isLoading: boolean
+}
+
+export function useDesignTokens(): UseDesignTokensReturn {
+  const [tokens, setTokens] = useState<TokenData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    designTokensClient.loadTokens().then(data => {
+      setTokens(data)
+      setLoading(false)
+    })
+  }, [])
+
+  const getColor = (path: string): string => {
+    if (!tokens) return '#000000'
+    const keys = path.split('.')
+    let value: any = tokens.color
+    for (const key of keys) {
+      value = value?.[key]
+    }
+    return value || '#000000'
+  }
+
+  const getSpacing = (path: string): string => {
+    if (!tokens) return '0px'
+    const keys = path.split('.')
+    let value: any = tokens.spacing
+    for (const key of keys) {
+      value = value?.[key]
+    }
+    return value || '0px'
+  }
+
+  const getClasses = (path: string): string => {
+    if (!tokens) return ''
+
+    const valueMap = getTokenMapSync(tokens, path)
+    const breakpoints = tokens.breakpoints
+
+    return css({
+      [valueMap.mobile ? 'padding' : '']: valueMap.mobile,
+      '@media (min-width: 768px)': {
+        [valueMap.tablet ? 'padding' : '']: valueMap.tablet
+      },
+      '@media (min-width: 1024px)': {
+        [valueMap.desktop ? 'padding' : '']: valueMap.desktop
+      }
+    })
+  }
+
+  return {
+    getColor,
+    getSpacing,
+    getClasses,
+    isLoading: loading
+  }
+}
+
+function getTokenMapSync(tokens: TokenData, path: string): Record<string, string> {
+  const keys = path.split('.')
+  let value: any = tokens
+
+  for (const key of keys) {
+    value = value?.[key]
+  }
+
+  return value || {}
+}
+
+// Auto-generated token constants from Firebase schema
+// Generated by: scripts/generate-token-constants.js
+export const TOKENS = {
+  color: {
+    primary: {
+      500: 'color.primary.500'
+    }
+  },
+  spacing: {
+    container: 'spacing.container',
+    button: {
+      default: 'spacing.button.default'
+    }
+  }
+} as const
+
+// Component implementation
+import { useDesignTokens } from './use-design-tokens'
+import { TOKENS } from './tokens-constants'
+
+export function Container({ children }) {
+  const { getClasses } = useDesignTokens()
+
+  const paddingClass = getClasses(TOKENS.spacing.container)
+
+  return (
+    <div css={paddingClass}>
+      {children}
+    </div>
+  )
+}
+
+export function Button({ variant = 'primary', children }) {
+  const { getColor, getSpacing } = useDesignTokens()
+
+  const buttonStyles = css({
+    backgroundColor: getColor(TOKENS.color.primary[500]),
+    padding: getSpacing(TOKENS.spacing.button.default),
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  })
+
+  return (
+    <button css={buttonStyles}>
+      {children}
+    </button>
+  )
+}
+
+// Storybook integration
+// Container.stories.tsx
+import { Container } from './Container'
+
+export default {
+  component: Container
+}
+
+export const Default = {
+  args: {
+    children: 'Container with live Firebase tokens'
+  }
+}
+
+// Button.stories.tsx
+import { Button } from './Button'
+
+export default {
+  component: Button
+}
+
+export const Primary = {
+  args: {
+    children: 'Firebase-powered button'
+  }
+}
+
+// package.json dependencies needed
+{
+  "dependencies": {
+    "@emotion/react":
+    "@emotion/styled":
+    "firebase":
+  },
+  "devDependencies":
+    "@storybook/react":
+    "@storybook/addon-essentials":
+  }
+}
