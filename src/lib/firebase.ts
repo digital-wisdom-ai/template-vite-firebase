@@ -8,7 +8,6 @@ function getFirebaseClientConfig() {
   const config = base64Decode(
     import.meta.env.VITE_PUBLIC_FIREBASE_CLIENT_CONFIG,
   )
-  console.log(config)
   return config
 }
 

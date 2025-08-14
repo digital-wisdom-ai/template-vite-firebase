@@ -10,7 +10,15 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
 
 export default [
-  { ignores: ['dist'] },
+  {
+    ignores: [
+      'dist/',
+      'dev-dist/',
+      'node_modules/',
+      '.storybook/',
+      'storybook-static/',
+    ],
+  },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {

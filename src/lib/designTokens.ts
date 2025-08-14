@@ -24,10 +24,10 @@ export class DesignTokensClient {
         const tokensJson = getValue(remoteConfig, 'design_tokens').asString()
         this.cache = JSON.parse(tokensJson)
         return this.cache!
-      } catch (error) {
+      } catch {
         console.warn(
-          'Failed to load design tokens from Firebase Remote Config:',
-          error,
+          'No Firebase Remote Config found for design tokens. ' +
+            'Run `make tokensUpload` to upload tokens to Firebase Remote Config.',
         )
         this.cache = tokensJson as TokenData
         return this.cache

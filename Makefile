@@ -1,4 +1,4 @@
-.PHONY: emulator build lint format checkFormat test clean tokensSync tokensUpload storybook
+.PHONY: emulator build lint format checkFormat test clean tokensSync tokensUpload generateIcons storybook
 
 emulator: lint format testRun
 	pnpm dev
@@ -70,6 +70,10 @@ tokensSync:
 
 tokensUpload:
 	node scripts/designTokens.js upload
+
+generateIcons:
+	@echo "Generating all favicon and PWA icons from BaseIcon.png..."
+	node scripts/generateIcons.js
 
 storybook:
 	pnpm storybook
