@@ -1,0 +1,77 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+export const ColorPrimary50 = "#e3f2fd";
+export const ColorPrimary100 = "#bbdefb";
+export const ColorPrimary200 = "#90caf9";
+export const ColorPrimary300 = "#64b5f6";
+export const ColorPrimary400 = "#42a5f5";
+export const ColorPrimary500 = "#2196f3";
+export const ColorPrimary600 = "#1e88e5";
+export const ColorPrimary700 = "#1976d2";
+export const ColorPrimary800 = "#1565c0";
+export const ColorPrimary900 = "#0d47a1";
+export const ColorSecondary50 = "#fce4ec";
+export const ColorSecondary100 = "#f8bbd9";
+export const ColorSecondary200 = "#f48fb1";
+export const ColorSecondary300 = "#f06292";
+export const ColorSecondary400 = "#ec407a";
+export const ColorSecondary500 = "#e91e63";
+export const ColorSecondary600 = "#d81b60";
+export const ColorSecondary700 = "#c2185b";
+export const ColorSecondary800 = "#ad1457";
+export const ColorSecondary900 = "#880e4f";
+export const ColorNeutral50 = "#fafafa";
+export const ColorNeutral100 = "#f5f5f5";
+export const ColorNeutral200 = "#eeeeee";
+export const ColorNeutral300 = "#e0e0e0";
+export const ColorNeutral400 = "#bdbdbd";
+export const ColorNeutral500 = "#9e9e9e";
+export const ColorNeutral600 = "#757575";
+export const ColorNeutral700 = "#616161";
+export const ColorNeutral800 = "#424242";
+export const ColorNeutral900 = "#212121";
+export const SpacingXs = "4px";
+export const SpacingSm = "8px";
+export const SpacingMd = "16px";
+export const SpacingLg = "24px";
+export const SpacingXl = "32px";
+export const SpacingXxl = "48px";
+export const SpacingContainerMobile = "16px";
+export const SpacingContainerTablet = "24px";
+export const SpacingContainerDesktop = "32px";
+export const TypographyFontFamilyPrimary =
+  'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+export const TypographyFontFamilyMono =
+  'JetBrains Mono, "Fira Code", Monaco, Consolas, monospace';
+export const TypographyFontSizeXs = "12px";
+export const TypographyFontSizeSm = "14px";
+export const TypographyFontSizeMd = "16px";
+export const TypographyFontSizeLg = "18px";
+export const TypographyFontSizeXl = "20px";
+export const TypographyFontSizeXxl = "24px";
+export const TypographyFontSizeH1 = "32px";
+export const TypographyFontSizeH2 = "28px";
+export const TypographyFontSizeH3 = "24px";
+export const TypographyFontSizeH4 = "20px";
+export const TypographyFontSizeH5 = "18px";
+export const TypographyFontSizeH6 = "16px";
+export const TypographyFontWeightLight = "300";
+export const TypographyFontWeightNormal = "400";
+export const TypographyFontWeightMedium = "500";
+export const TypographyFontWeightSemibold = "600";
+export const TypographyFontWeightBold = "700";
+export const TypographyLineHeightTight = 1.2;
+export const TypographyLineHeightNormal = 1.5;
+export const TypographyLineHeightRelaxed = 1.7;
+export const BorderRadiusNone = "0px";
+export const BorderRadiusSm = "4px";
+export const BorderRadiusMd = "8px";
+export const BorderRadiusLg = "12px";
+export const BorderRadiusXl = "16px";
+export const BorderRadiusFull = "9999px";
+export const BreakpointsMobile = "0px";
+export const BreakpointsTablet = "768px";
+export const BreakpointsDesktop = "1024px";
+export const BreakpointsWide = "1200px";

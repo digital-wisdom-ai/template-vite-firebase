@@ -65,8 +65,12 @@ featureComplete: checkPushed
 checkPushed:
 	@test "$(GIT_LOCAL_COMMIT)" = "$(GIT_REMOTE_COMMIT)"
 
+tokensGenerate:
+	npx style-dictionary build
+
 tokensSync:
 	node scripts/designTokens.js sync
+	npx style-dictionary build
 
 tokensUpload:
 	node scripts/designTokens.js upload
